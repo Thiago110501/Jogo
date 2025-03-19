@@ -123,3 +123,85 @@ window.onload = function() {
   listarJogadoresDisponiveisComPaginacao();
   listarJogadores();
 };
+// Novos Jogadores com informações adicionais
+let jogadoresDisponiveis = [
+    { nome: 'Neymar', idade: 29, habilidade: 92, valor: 150000000 },
+    { nome: 'Messi', idade: 34, habilidade: 98, valor: 200000000 },
+    { nome: 'Mbappé', idade: 22, habilidade: 90, valor: 120000000 },
+    { nome: 'Cristiano Ronaldo', idade: 36, habilidade: 93, valor: 150000000 },
+    { nome: 'Pogba', idade: 28, habilidade: 85, valor: 85000000 },
+    // Adicione mais jogadores aqui
+];
+
+let saldo = 1000000;  // O saldo inicial
+let jogadoresNoTime = []; // Jogadores no time
+
+// Função para atualizar a exibição do saldo
+function atualizarSaldo() {
+  document.getElementById('saldo').innerText = saldo;
+}
+
+// Função para comprar um jogador
+function comprarJogador(nome) {
+  const jogador = jogadoresDisponiveis.find(j => j.nome === nome);
+
+  if (!jogador) {
+    alert("Jogador não encontrado!");
+    return;
+  }
+
+  // Verificar se o jogador tem saldo suficiente
+  if (saldo >= jogador.valor) {
+    saldo -= jogador.valor; // Deduzir o valor da compra
+    jogadoresNoTime.push(jogador); // Adicionar o jogador ao time
+    atualizarSaldo();
+    alert(`Você comprou ${jogador.nome} por ${jogador.valor} créditos!`);
+    listarJogadores(); // Atualiza a lista de jogadores do time
+    listarJogadoresDisponiveis(); // Atualiza a lista de jogadores disponíveis
+  } else {
+    alert("Saldo insuficiente!");
+  }
+}
+
+// Função para listar os jogadores disponíveis
+function listarJogadoresDisponiveis() {
+  const listaJogadoresDisponiveis = document.getElementById('listaJogadoresDisponiveis');
+  listaJogadoresDisponiveis.innerHTML = jogadoresDisponiveis.map(jogador => `
+    <li>${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade}
+    <button onclick="comprarJogador('${jogador.nome}')">Comprar</button></li>
+  `).join('');
+}
+
+// Função para listar os jogadores no time
+function listarJogadores() {
+  const listaJogadores = document.getElementById('listaJogadores');
+  listaJogadores.innerHTML = jogadoresNoTime.map(jogador => `
+    <li>${jogador.nome} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade}</li>
+  `).join('');
+}
+
+// Inicializando a página
+window.onload = function() {
+  listarJogadoresDisponiveis();
+  listarJogadores();
+};
+// Função para simular o final de uma temporada
+function simularTemporada() {
+  // Gerar eventos aleatórios como lesões, transferências, etc.
+  const evento = Math.random();
+  if (evento < 0.3) {
+    alert("Um dos seus jogadores sofreu uma lesão e ficará fora por algumas semanas!");
+  } else if (evento < 0.6) {
+    alert("Seu time ganhou um campeonato e você recebeu um prêmio em dinheiro!");
+    saldo += 500000; // Adiciona dinheiro ao saldo
+    atualizarSaldo();
+  } else {
+    alert("O time teve um desempenho ruim na temporada.");
+  }
+}
+
+// Chamar a função ao final de cada temporada
+function finalizarTemporada() {
+  simularTemporada();
+  // Outros ajustes, como atualizar salários dos jogadores ou ganhar novos contratos.
+}

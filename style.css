@@ -1,12 +1,32 @@
 body {
   font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
   text-align: center;
-  background-color: #f0f0f0;
+}
+
+h1 {
+  color: #333;
+}
+
+#financas {
+  margin: 20px 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #ddd;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
 }
 
 button {
-  padding: 10px;
-  margin: 10px;
+  margin-left: 10px;
+  padding: 5px 10px;
   background-color: #4CAF50;
   color: white;
   border: none;

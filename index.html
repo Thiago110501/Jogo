@@ -1,4 +1,5 @@
-!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -8,20 +9,28 @@
 </head>
 <body>
   <h1>Bem-vindo ao Jogo de Gestão de Futebol</h1>
+  
   <div id="financas">
     <p>Saldo atual: <span id="saldo">1000000</span> créditos</p>
   </div>
 
-  <div id="jogo">
-    <h2>Comandos do Jogo</h2>
-    <button onclick="comprarJogador('Neymar', 500000)">Comprar Neymar</button>
-    <button onclick="venderJogador('Neymar', 300000)">Vender Neymar</button>
-    <button onclick="mostrarJogadores()">Ver Jogadores</button>
-  </div>
+  <h2>Jogadores Disponíveis para Compra</h2>
+  <ul id="listaJogadoresDisponiveis">
+    <!-- Jogadores disponíveis aparecerão aqui -->
+  </ul>
 
   <h3>Jogadores no time:</h3>
-  <ul id="listaJogadores"></ul>
+  <ul id="listaJogadores">
+    <!-- Jogadores do time aparecerão aqui -->
+  </ul>
+
+  <div id="paginas"></div>
 
   <script src="script.js"></script>
+  <script>
+    // Carregar jogadores disponíveis e do time ao carregar a página
+    listarJogadoresDisponiveisComPaginacao();
+    listarJogadores();
+  </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
-// Variáveis globais
+ Variáveis globais
 let saldo = 1000000; // Saldo inicial
-let jogadoresNoTime = []; // Lista de jogadores do time
+let times = []; // Lista de times
+let jogadoresDisponiveis = gerarJogadores(1000); // Jogadores disponíveis para compra
 
 // Funções para gerar jogadores aleatórios
 function gerarNomeJogador() {
@@ -32,8 +33,20 @@ function gerarJogadores(numJogadores) {
   return jogadoresGerados;
 }
 
-// Gerando 1000 jogadores para o mercado
-let jogadoresDisponiveis = gerarJogadores(1000);
+// Funções para criar times e adicionar jogadores aos times
+function criarTime(nome) {
+  const novoTime = { nome, jogadores: [], saldo: 0 };
+  times.push(novoTime);
+  alert(`Time ${nome} criado com sucesso!`);
+}
+
+function adicionarJogadorAoTime(nomeTime, jogador) {
+  const time = times.find(time => time.nome === nomeTime);
+  if (time) {
+    time.jogadores.push(jogador);
+    alert(`${jogador.nome} foi adicionado ao time ${nomeTime}.`);
+  }
+}
 
 // Função para atualizar o saldo exibido
 function atualizarSaldo() {
@@ -44,12 +57,11 @@ function atualizarSaldo() {
 function negociarSalario(jogador) {
   let salarioOferecido = prompt(`Qual salário você oferece para ${jogador.nome}?`);
 
-  // Se o salário oferecido for menor que o mínimo aceitável, ele recusa
   if (salarioOferecido < jogador.salarioMinimo) {
     alert(`${jogador.nome} recusou a oferta por salário baixo!`);
     return false;
   } else {
-    jogador.salario = salarioOferecido; // Jogador aceita o salário
+    jogador.salario = salarioOferecido;
     alert(`${jogador.nome} aceitou a oferta de salário de ${salarioOferecido}!`);
     return true;
   }
@@ -58,38 +70,32 @@ function negociarSalario(jogador) {
 // Função para comprar um jogador
 function comprarJogador(nome) {
   const jogador = jogadoresDisponiveis.find(jogador => jogador.nome === nome);
-
   if (!jogador) {
     alert('Jogador não encontrado!');
     return;
   }
 
-  // Negociar salário antes de comprar
   const aceitouContrato = negociarSalario(jogador);
-  if (!aceitouContrato) return; // Se o contrato for recusado, não compra o jogador
+  if (!aceitouContrato) return;
 
-  // Verificar se o saldo é suficiente
   if (saldo >= jogador.valor) {
-    saldo -= jogador.valor; // Deduz o valor da compra
-    jogadoresNoTime.push(jogador); // Adiciona o jogador ao time
-    atualizarSaldo();
+    saldo -= jogador.valor;
+    jogadoresDisponiveis = jogadoresDisponiveis.filter(jog => jog.nome !== nome);
     alert(`Você comprou ${jogador.nome} por ${jogador.valor} créditos!`);
-    listarJogadores(); // Atualiza a lista do time
-    listarJogadoresDisponiveisComPaginacao(); // Atualiza os jogadores disponíveis
+    listarJogadoresDisponiveisComPaginacao();
   } else {
     alert("Saldo insuficiente para comprar este jogador!");
   }
 }
 
 // Função para listar jogadores do time
-function listarJogadores() {
-  const listaJogadores = document.getElementById('listaJogadores');
-  if (jogadoresNoTime.length > 0) {
-    listaJogadores.innerHTML = jogadoresNoTime.map(jogador => 
+function listarJogadores(nomeTime) {
+  const time = times.find(time => time.nome === nomeTime);
+  if (time) {
+    const listaJogadores = document.getElementById('listaJogadores');
+    listaJogadores.innerHTML = time.jogadores.map(jogador =>
       `<li>${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade} - Salário: ${jogador.salario}</li>`
     ).join('');
-  } else {
-    listaJogadores.innerHTML = '<li>Nenhum jogador no time</li>';
   }
 }
 
@@ -101,19 +107,17 @@ function listarJogadoresDisponiveisComPaginacao() {
   const listaDisponiveis = document.getElementById('listaJogadoresDisponiveis');
   const inicio = (paginaAtual - 1) * jogadoresPorPagina;
   const fim = paginaAtual * jogadoresPorPagina;
-
   const jogadoresParaExibir = jogadoresDisponiveis.slice(inicio, fim);
 
   if (jogadoresParaExibir.length > 0) {
-    listaDisponiveis.innerHTML = jogadoresParaExibir.map(jogador => 
-      `<li>${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade} 
+    listaDisponiveis.innerHTML = jogadoresParaExibir.map(jogador =>
+      `<li>${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade}
       <button onclick="comprarJogador('${jogador.nome}')">Comprar</button></li>`
     ).join('');
   } else {
     listaDisponiveis.innerHTML = '<li>Não há jogadores disponíveis.</li>';
   }
 
-  // Exibir botões de navegação
   document.getElementById('paginas').innerHTML = `
     <button onclick="mudarPagina('anterior')">Anterior</button>
     <span>Página ${paginaAtual}</span>
@@ -171,5 +175,4 @@ function avancarMes() {
 // Carregar a página inicial com os jogadores
 window.onload = function() {
   listarJogadoresDisponiveisComPaginacao();
-  listarJogadores();
 };

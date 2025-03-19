@@ -31,17 +31,17 @@ function gerarJogadores(numJogadores) {
     const idade = gerarIdade();
     const habilidade = gerarHabilidade();
     const valor = gerarValor();
-    jogadoresGerados.push({ nome, idade, habilidade, valor });
+    jogadoresGerados.push({ nome, idade, habilidade, valor, salario: 0 });
   }
   return jogadoresGerados;
 }
 
 // Gerando 1000 jogadores para o mercado
-const jogadoresDisponiveis = gerarJogadores(1000);
+let jogadoresDisponiveis = gerarJogadores(1000);
 
 // Função para atualizar o saldo exibido
 function atualizarSaldo() {
-  document.getElementById('saldo').innerText = saldo;
+  document.getElementById('saldo').innerText = `Saldo: ${saldo}`;
 }
 
 // Função para negociar salário

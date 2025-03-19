@@ -1,4 +1,4 @@
-// Variáveis globais
+/ Variáveis globais
 let saldo = 1000000; // Saldo inicial
 let times = []; // Lista de times
 let jogadoresDisponiveis = gerarJogadores(1000); // Jogadores disponíveis para compra
@@ -198,10 +198,6 @@ function avancarMes() {
   verificarContratos();
 }
 
-// Carregar a página inicial com os jogadores
-window.onload = function() {
-  inicializarInterface();
-};
 // Função para renovar contrato de um jogador
 function renovarContrato(nomeTime, nomeJogador) {
   const time = times.find(time => time.nome === nomeTime);
@@ -246,30 +242,6 @@ function venderJogador(nomeTime, nomeJogador) {
     } else {
       alert("Jogador não encontrado no time!");
     }
-  } else {
-    alert("Time não encontrado!");
-  }
-}
-
-// Função para exibir detalhes de um time
-function exibirDetalhesTime(nomeTime) {
-  const time = times.find(time => time.nome === nomeTime);
-  if (time) {
-    const detalhesTime = document.getElementById('detalhesTime');
-    detalhesTime.innerHTML = `
-      <h2>Time: ${time.nome}</h2>
-      <p>Saldo: ${time.saldo} créditos</p>
-      <h3>Jogadores:</h3>
-      <ul>
-        ${time.jogadores.map(jogador => `
-          <li>
-            ${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade} - Salário: ${jogador.salario}
-            <button onclick="venderJogador('${time.nome}', '${jogador.nome}')">Vender</button>
-            <button onclick="renovarContrato('${time.nome}', '${jogador.nome}')">Renovar Contrato</button>
-          </li>
-        `).join('')}
-      </ul>
-    `;
   } else {
     alert("Time não encontrado!");
   }

@@ -1,0 +1,27 @@
+!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo de Gestão de Futebol</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Bem-vindo ao Jogo de Gestão de Futebol</h1>
+  <div id="financas">
+    <p>Saldo atual: <span id="saldo">1000000</span> créditos</p>
+  </div>
+
+  <div id="jogo">
+    <h2>Comandos do Jogo</h2>
+    <button onclick="comprarJogador('Neymar', 500000)">Comprar Neymar</button>
+    <button onclick="venderJogador('Neymar', 300000)">Vender Neymar</button>
+    <button onclick="mostrarJogadores()">Ver Jogadores</button>
+  </div>
+
+  <h3>Jogadores no time:</h3>
+  <ul id="listaJogadores"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -205,3 +205,32 @@ function finalizarTemporada() {
   simularTemporada();
   // Outros ajustes, como atualizar salários dos jogadores ou ganhar novos contratos.
 }
+function negociarSalario(jogador) {
+  let salarioOferecido = prompt(`Qual salário você oferece para ${jogador.nome}?`);
+
+  // Se o salário oferecido for menor que o mínimo aceitável do jogador, ele pode recusar
+  if (salarioOferecido < jogador.salarioMinimo) {
+    alert(`${jogador.nome} recusou a oferta por salário baixo!`);
+    return false; // Recusa a contratação
+  } else {
+    jogador.salario = salarioOferecido; // Aceita o salário oferecido
+    alert(`${jogador.nome} aceitou a oferta de ${salarioOferecido}!`);
+    return true;
+  }
+}
+// Função para verificar contratos expirando
+function verificarContratos() {
+  jogadoresNoTime.forEach(jogador => {
+    if (jogador.temporadaRestante <= 0) {
+      alert(`${jogador.nome} tem contrato expirando. Hora de renovação!`);
+    } else {
+      jogador.temporadaRestante--; // Decrementa o tempo do contrato
+    }
+  });
+}
+
+// Chamar a função ao final de cada "mês"
+function avancarMes() {
+  verificarContratos();
+  // Deduz os salários, etc...
+}

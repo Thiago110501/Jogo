@@ -173,3 +173,41 @@ window.onload = function() {
   listarJogadoresDisponiveisComPaginacao();
   listarJogadores();
 };
+// Criar times com jogadores aleatórios
+function criarTime(nomeTime, numJogadores) {
+  let jogadoresTime = gerarJogadores(numJogadores);
+  return { nome: nomeTime, jogadores: jogadoresTime };
+}
+
+// Função para criar campeonatos
+function criarCampeonato(nomeCampeonato, times) {
+  return { nome: nomeCampeonato, times: times };
+}
+
+// Simular um campeonato com sorteio de vencedores
+function simularCampeonato(campeonato) {
+  const times = campeonato.times;
+  const vencedor = times[Math.floor(Math.random() * times.length)];
+  alert(`O vencedor do campeonato ${campeonato.nome} é ${vencedor.nome}!`);
+  // Exemplo de premiar vencedor
+  saldo += 1000000; // Adiciona dinheiro ao saldo
+  atualizarSaldo();
+}
+
+// Exemplo de criação de times e campeonato ao iniciar a página
+window.onload = function() {
+  // Criar times aleatórios
+  const time1 = criarTime('Time A', 11);
+  const time2 = criarTime('Time B', 11);
+  const time3 = criarTime('Time C', 11);
+  
+  // Criar campeonato com os times
+  const campeonato = criarCampeonato('Campeonato Nacional', [time1, time2, time3]);
+
+  // Simular o campeonato
+  simularCampeonato(campeonato);
+
+  // Carregar jogadores existentes
+  listarJogadoresDisponiveisComPaginacao();
+  listarJogadores();
+};

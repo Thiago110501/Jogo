@@ -69,9 +69,13 @@ function comprarJogador(nome) {
 // Função para listar os jogadores do time
 function listarJogadores() {
   const listaJogadores = document.getElementById('listaJogadores');
-  listaJogadores.innerHTML = jogadoresNoTime.length > 0 ? jogadoresNoTime.map(jogador => 
-    `<li>${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade}</li>`
-  ).join('') : '<li>Nenhum jogador no time</li>';
+  if (jogadoresNoTime.length > 0) {
+    listaJogadores.innerHTML = jogadoresNoTime.map(jogador => 
+      `<li>${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade}</li>`
+    ).join('');
+  } else {
+    listaJogadores.innerHTML = '<li>Nenhum jogador no time</li>';
+  }
 }
 
 // Função para listar os jogadores disponíveis com paginação
@@ -88,10 +92,14 @@ function listarJogadoresDisponiveisComPaginacao() {
   // Limitar a exibição aos jogadores da página atual
   const jogadoresParaExibir = jogadoresDisponiveis.slice(inicio, fim);
 
-  listaDisponiveis.innerHTML = jogadoresParaExibir.length > 0 ? jogadoresParaExibir.map(jogador => 
-    `<li>${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade} 
-    <button onclick="comprarJogador('${jogador.nome}')">Comprar</button></li>`
-  ).join('') : '<li>Não há jogadores disponíveis.</li>';
+  if (jogadoresParaExibir.length > 0) {
+    listaDisponiveis.innerHTML = jogadoresParaExibir.map(jogador => 
+      `<li>${jogador.nome} - Valor: ${jogador.valor} - Habilidade: ${jogador.habilidade} - Idade: ${jogador.idade} 
+      <button onclick="comprarJogador('${jogador.nome}')">Comprar</button></li>`
+    ).join('');
+  } else {
+    listaDisponiveis.innerHTML = '<li>Não há jogadores disponíveis.</li>';
+  }
   
   // Exibir botões de navegação
   document.getElementById('paginas').innerHTML = `
@@ -111,5 +119,7 @@ function mudarPagina(direcao) {
 }
 
 // Carregar os jogadores ao carregar a página
-listarJogadoresDisponiveisComPaginacao();
-listarJogadores();
+window.onload = function() {
+  listarJogadoresDisponiveisComPaginacao();
+  listarJogadores();
+};

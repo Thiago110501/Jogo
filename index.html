@@ -29,8 +29,10 @@
   <script src="script.js"></script>
   <script>
     // Carregar jogadores disponíveis e do time ao carregar a página
-    listarJogadoresDisponiveisComPaginacao();
-    listarJogadores();
+    window.onload = function() {
+      listarJogadoresDisponiveis();
+      listarJogadores();
+    };
   </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -23,6 +23,11 @@
     <!-- Jogadores do time aparecerão aqui -->
   </ul>
 
+  <h3>Times Criados:</h3>
+  <ul id="listaTimes">
+    <!-- Times criados aparecerão aqui -->
+  </ul>
+
   <div id="paginas"></div>
 
   <script src="script.js"></script>
@@ -30,7 +35,7 @@
     // Carregar jogadores disponíveis e do time ao carregar a página
     window.onload = function() {
       listarJogadoresDisponiveisComPaginacao();
-      listarJogadores();
+      listarTimes();
     };
   </script>
 </body>
